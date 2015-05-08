@@ -1,0 +1,6 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+test:
+  title: Test Title
+  held_at: 2015-05-07 15:15:59
+

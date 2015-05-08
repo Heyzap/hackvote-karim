@@ -1,0 +1,17 @@
+<% provide(:title, "Hackday") %>
+
+<% if @current_hackdays.any? %>
+	<h1>Vote on current hackdays!</h1>
+	<%= render 'list', :hackdays => @current_hackdays %>
+<% end %>
+
+<h1>Create a new Hackday!</h1>
+<%= form_for @new_hackday do |f| %>	
+	<%= render 'fields', :f => f %>
+	<%= f.submit "Create Hackday" %>
+<% end %>
+
+<% if @past_hackdays.any? %>
+	<h1>Past Hackdays:</h1>
+	<%= render 'list', :hackdays => @past_hackdays %>
+<% end %>

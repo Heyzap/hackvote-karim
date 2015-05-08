@@ -1,0 +1,7 @@
+<%= render 'shared/error_messages', :object => f.object %>
+
+<%= f.label :title %>
+<%= f.text_field :title, :placeholder => "#{ Date::MONTHNAMES[Date.today.month] } Hackday", :required => true %>
+
+<%= f.label :held_at %>
+<%= f.date_field :held_at, :value => Time.now.strftime('%Y-%m-%d'), :required => true %>

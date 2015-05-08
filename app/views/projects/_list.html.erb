@@ -1,0 +1,7 @@
+<ul>
+	<% projects.each do |project| %>
+		<li><%= "#{project.title} by #{project.creators}" %> | 
+		<%= link_to "delete", project, :method => :delete, :data => { :confirm => "Are you sure?" } %> | 
+		<%= link_to "edit", edit_project_path(project) %></li>
+	<% end %>
+</ul>
