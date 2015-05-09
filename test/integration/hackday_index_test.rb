@@ -3,7 +3,7 @@ require 'test_helper'
 class HackdayIndexTest < ActionDispatch::IntegrationTest
   
   def setup
-    @hackday = hackdays(:test)
+    @hackday = hackdays(:testHackday)
   end
 
   test "should redirect with error if incorrect new hackday" do
@@ -15,5 +15,4 @@ class HackdayIndexTest < ActionDispatch::IntegrationTest
     assert_template 'hackdays/index'
     assert_select '#error_explanation'
   end
-
 end

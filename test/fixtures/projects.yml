@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  title: MyString
-  votes: 1
-  creators: MyString
-  hackday_id: 
+testProject:
+  title: Test Project 1
+  votes: 0
+  creators: Test Creator
+  hackday: testHackday
 
-two:
-  title: MyString
-  votes: 1
-  creators: MyString
-  hackday_id: 
+testProject2:
+  title: Test Project 2
+  votes: 0
+  creators: Test Creator 2
+  hackday: testHackday2

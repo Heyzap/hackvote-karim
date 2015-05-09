@@ -1,8 +1,9 @@
 <h1><%= @hackday.title %></h1>
 <small>Held: <%= time_ago_in_words(@hackday.held_at) %> ago</small>
+<%= link_to "See all hackdays", hackdays_url %>
 
 <% if @hackday.active? %>
-	<div><small><%= link_to "change", edit_hackday_url(@hackday) %></small></div>
+	<div><small><%= link_to "change", edit_hackday_path(@hackday) %></small></div>
 	<div>
 		<small>
 			<%= link_to "delete", @hackday, :method => :delete, :data => { 
@@ -10,13 +11,19 @@
 			} %>
 		</small>
 	</div>
+
+	<%= button_to "Close voting", close_voting_hackday_path(@hackday), :method => :patch, :data => {
+		:confirm => "Are you sure you wish to close voting?"
+	} %>
 <% end %>
 
-<h2>Add Project</h2>
-<%= form_for @hackday.projects.build do |f| %>
-	<%= render 'projects/fields', :f => f %>
-	<%= f.submit "Add project" %>
+<% if @hackday.active? %>
+	<h2>Add Project</h2>
+	<%= form_for @new_project do |f| %>
+		<%= render 'projects/fields', :f => f %>
+		<%= f.submit "Add project" %>
+	<% end %>
 <% end %>
 
 <h2>Projects</h2>
-<%= render 'projects/list', :projects => @hackday.projects.where(:hackday_id => @hackday.id) %>
+<%= render 'projects/list', :projects => @projects %>

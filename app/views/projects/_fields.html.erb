@@ -1,9 +1,7 @@
 <%= render 'shared/error_messages', :object => f.object %>
 
 <%= f.label :title %>
-<%= f.text_field :title, :placeholder => "The Thing" %>
+<%= f.text_field :title, :placeholder => "The Thing", :required => true %>
 
 <%= f.label :creators %>
-<%= f.text_field :creators, :placeholder => "Person that did the thing" %>
-
-<%= hidden_field_tag :hackday_id, f.object.
+<%= f.text_field :creators, :placeholder => "Person that did the thing", :required => true %>
