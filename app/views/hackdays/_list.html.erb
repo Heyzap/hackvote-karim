@@ -1,5 +1,5 @@
 <ul>
 	<% hackdays.each do |hackday| %>
-		<li><%= link_to hackday.title, hackday %></li>
+		<li><%= link_to hackday.title, hackday %> - held <%= time_ago_in_words(hackday.held_at) %> ago.</li>
 	<% end %>
 </ul>

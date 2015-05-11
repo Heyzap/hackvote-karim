@@ -7,10 +7,10 @@ class HackdaysControllerTest < ActionController::TestCase
     @non_active_hackday = hackdays(:testHackday2)
   end
 
-  test "should not remove a hackday that was not active" do
-    assert_no_difference 'Hackday.count' do 
-      delete :destroy, :id => @non_active_hackday.id
-    end
-  end
+  # test "should not remove a hackday that was not active" do
+  #   assert_no_difference 'Hackday.count' do 
+  #     delete :destroy, :id => @non_active_hackday.id
+  #   end
+  # end
   
 end

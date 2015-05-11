@@ -2,6 +2,7 @@ class Project < ActiveRecord::Base
   belongs_to :hackday
 
   before_save :hackday_active
+  before_destroy :hackday_active
 
   default_scope -> { order(:votes => :desc) }
 

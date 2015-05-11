@@ -20,4 +20,19 @@ class HackdayTest < ActiveSupport::TestCase
     assert_not @hackday.valid?
   end
 
+  test "change or delete non active hackday" do
+    @hackday.update_attribute(:active, false)
+    assert_not @hackday.update_attribute(:title, "change")
+    assert_not @hackday.destroy
+  end
+
+  test "change or delete active hackday" do
+    @hackday.update_attribute(:active, true)
+    @hackday.update_attribute(:title, "change")
+    @hackday.reload
+
+    assert @hackday.title, "change"
+    assert @hackday.destroy
+  end
+
 end

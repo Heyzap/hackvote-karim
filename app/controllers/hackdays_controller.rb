@@ -9,7 +9,7 @@ class HackdaysController < ApplicationController
     @hackday = Hackday.new hackday_params
     
     if @hackday.save
-      create_votes_cookie
+      cookies["#{@hackday.id}_votes"] = MAX_VOTES
       redirect_to @hackday
     else
       set_current_and_past_hackdays
@@ -37,8 +37,11 @@ class HackdaysController < ApplicationController
 
   def destroy
     @hackday = Hackday.find(params[:id])
-    @hackday.destroy
-    flash[:warning] = "Cannot remove a non-active hackday" unless @hackday.active?
+    if @hackday.destroy
+      cookies.delete "#{@hackday.id}_votes"
+    else
+      flash[:warning] = "Cannot remove a non-active hackday"
+    end
     redirect_to hackdays_url
   end
 
@@ -46,10 +49,12 @@ class HackdaysController < ApplicationController
     @hackday = Hackday.find(params[:id])
     @new_project = @hackday.projects.build
     @projects = @hackday.projects.where(:hackday_id => @hackday.id)
+    @votes = user_votes
   end
 
   def close_voting
     @hackday = Hackday.find(params[:id])
+
     if @hackday.active?
       flash[:danger] = "Could not close voting" unless @hackday.update_attribute(:active, false)
     else
@@ -65,20 +70,8 @@ class HackdaysController < ApplicationController
   end
 
   def set_current_and_past_hackdays
-    @current_hackdays = Hackday.current
+    @current_hackdays = [Hackday.current]
     @past_hackdays = Hackday.past
-  end
-
-  def set_projects
-    @new_project = @hackday.projects.build
-    @projects = @hackday.projects.where(:hackday_id => @hackday.id)
-  end
-
-  def create_votes_cookie
-    cookies["#{@hackday.id}_votes"] = {
-      :value => {},
-      :expires => 2.weeks.from_now
-    }
   end
 
 end

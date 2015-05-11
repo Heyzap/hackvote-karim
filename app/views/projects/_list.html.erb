@@ -7,8 +7,7 @@
 				 	 | <%= link_to "downvote", downvote_project_path(project), :method => :patch %>
 				</div>
 				<div>
-					<%= link_to "delete", project, :method => :delete, :data => { :confirm => "Are you sure?" } %>
-					 | <%= link_to "edit", edit_project_path(project) %>
+					<%= link_to "edit", edit_project_path(project) %>
 				</div>
 			<% end %>
 		</li>

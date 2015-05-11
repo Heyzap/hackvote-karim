@@ -1,7 +1,7 @@
 <% provide(:title, "Hackday") %>
 
 <% if @current_hackdays.any? %>
-	<h1>Vote on current hackdays!</h1>
+	<h1>Current hackday</h1>
 	<%= render 'list', :hackdays => @current_hackdays %>
 <% end %>
 
