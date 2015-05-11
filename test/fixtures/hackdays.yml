@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+testHackday:
+  title: Test Title
+  held_at: 2015-05-07 15:15:59
+  active: true
+
+testHackday2:
+  title: Test2 Title
+  held_at: 2015-05-07 15:15:59
+  active: false

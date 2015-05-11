@@ -1,0 +1,7 @@
+<h3>Edit Hackday</h3>
+
+<%= form_for @hackday do |f| %>
+	<%= render 'fields', :f => f %>
+
+	<%= f.submit 'Update Hackday' %>
+<% end %>

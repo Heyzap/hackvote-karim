@@ -1,0 +1,15 @@
+<ul>
+	<% projects.each do |project| %>
+		<li><%= "#{project.title} by #{project.creators}" %> - <b><%= pluralize project.votes, "vote" %></b>
+			<% if project.hackday.active? %>
+				<div>
+					<%= link_to "upvote", upvote_project_path(project), :method => :patch %>
+				 	 | <%= link_to "downvote", downvote_project_path(project), :method => :patch %>
+				</div>
+				<div>
+					<%= link_to "edit", edit_project_path(project) %>
+				</div>
+			<% end %>
+		</li>
+	<% end %>
+</ul>

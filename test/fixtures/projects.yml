@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+testProject:
+  title: Test Project 1
+  votes: 0
+  creators: Test Creator
+  hackday: testHackday
+
+testProject2:
+  title: Test Project 2
+  votes: 0
+  creators: Test Creator 2
+  hackday: testHackday2

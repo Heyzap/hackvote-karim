@@ -1,0 +1,38 @@
+<%= render 'shared/error_messages', :object => @hackday %>
+
+<h1><%= @hackday.title %></h1>
+<small>Held: <%= time_ago_in_words(@hackday.held_at) %> ago</small>
+<%= link_to "See all hackdays", hackdays_url %>
+
+<% if @hackday.active? %>
+	<div><small><%= link_to "change", edit_hackday_path(@hackday) %></small></div>
+	<div>
+		<small>
+			<%= link_to "delete", @hackday, :method => :delete, :data => { 
+				:confirm => "Are you sure you want to delete this hackday?"
+			} %>
+		</small>
+	</div>
+	<%= button_to "Close voting", close_voting_hackday_path(@hackday), :method => :patch, :data => {
+		:confirm => "Are you sure you want to close voting for this hackday?"
+	} %>
+
+	<h2>Add Project</h2>
+	<%= form_for @new_project do |f| %>
+		<%= render 'projects/fields', :f => f %>
+		<%= hidden_field_tag :hackday_id, @hackday.id %>
+		<%= f.submit "Add project" %>
+	<% end %>
+
+	<p><%= pluralize(@votes, "vote") %> remaining</p>
+
+<% else %>
+	<p>Voting closed!</p>
+<% end %>
+
+<% if @hackday.active? %>
+	
+<% end %>
+
+<h2>Projects</h2>
+<%= render 'projects/list', :projects => @projects %>
