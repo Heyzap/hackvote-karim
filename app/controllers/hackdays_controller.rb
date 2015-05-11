@@ -1,4 +1,7 @@
 class HackdaysController < ApplicationController
+  include UserVotes
+
+  before_action :set_hackday, :except => [:index, :create]
 
   def index
     @hackday = Hackday.new
@@ -7,9 +10,9 @@ class HackdaysController < ApplicationController
 
   def create
     @hackday = Hackday.new hackday_params
-    
+
     if @hackday.save
-      cookies["#{@hackday.id}_votes"] = MAX_VOTES
+      session["#{@hackday.id}_votes"] = MAX_VOTES
       redirect_to @hackday
     else
       set_current_and_past_hackdays
@@ -18,16 +21,14 @@ class HackdaysController < ApplicationController
   end
 
   def edit
-    @hackday = Hackday.find(params[:id])
-    unless @hackday.active?
+    unless @hackday && @hackday.active?
       flash[:warning] = "Cannot edit a non-active hackday"
-      redirect_to request.referrer || root_url
+      redirect_to(request.referrer || root_url)
     end
   end
 
   def update
-    @hackday = Hackday.find(params[:id])
-    if @hackday.update_attributes(hackday_params)
+    if @hackday && @hackday.update_attributes(hackday_params)
       flash[:success] = "Hackday updated!"
       redirect_to @hackday
     else
@@ -36,32 +37,31 @@ class HackdaysController < ApplicationController
   end
 
   def destroy
-    @hackday = Hackday.find(params[:id])
-    if @hackday.destroy
+    if @hackday && @hackday.destroy
       cookies.delete "#{@hackday.id}_votes"
+      redirect_to hackdays_url
     else
-      flash[:warning] = "Cannot remove a non-active hackday"
-    end
-    redirect_to hackdays_url
+      set_show_vars
+      render 'hackdays/show'
+    end    
   end
 
   def show
-    @hackday = Hackday.find(params[:id])
-    @new_project = @hackday.projects.build
-    @projects = @hackday.projects.where(:hackday_id => @hackday.id)
-    @votes = user_votes
+    if @hackday
+      set_show_vars
+    else
+      redirect_to root_url
+    end
   end
 
   def close_voting
-    @hackday = Hackday.find(params[:id])
-
-    if @hackday.active?
-      flash[:danger] = "Could not close voting" unless @hackday.update_attribute(:active, false)
+    if @hackday && @hackday.update_attribute(:active, false)
+      redirect_to @hackday
     else
-      flash[:warning] = "Hackday is already closed for voting"
+      flash[:danger] = "Could not close voting"
+      set_show_vars
+      render 'hackdays/show'
     end
-
-    redirect_to @hackday
   end
 
   private
@@ -69,9 +69,19 @@ class HackdaysController < ApplicationController
     params.require(:hackday).permit(:title, :held_at)
   end
 
+  def set_hackday
+    @hackday = Hackday.find_by_id(params[:id].to_i)
+  end
+
   def set_current_and_past_hackdays
-    @current_hackdays = [Hackday.current]
+    @current_hackday = Hackday.current
     @past_hackdays = Hackday.past
+  end
+
+  def set_show_vars
+    @new_project = Project.new(:hackday => @hackday)
+    @projects = @hackday.projects
+    @votes = user_votes
   end
 
 end

@@ -9,7 +9,7 @@ class HackdayIndexTest < ActionDispatch::IntegrationTest
   test "invalid new hackday" do
     assert_no_difference 'Hackday.count' do
       post hackdays_path, :hackday => {
-        :title => "",
+        :title => " ",
         :held_at => Time.now
       }
     end

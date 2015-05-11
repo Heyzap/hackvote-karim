@@ -1,5 +1,7 @@
 class ProjectsController < ApplicationController
-  before_action :set_project_and_hackday, :only => [:edit, :update, :destroy, :upvote, :downvote]
+  include UserVotes
+
+  before_action :set_project_and_hackday, :except => :create
 
   def create
     @hackday = Hackday.find(params[:hackday_id])
@@ -60,7 +62,7 @@ class ProjectsController < ApplicationController
     end
 
     def set_project_and_hackday
-      @project = Project.find(params[:id])
+      @project = Project.find_by_id(params[:id].to_i)
       @hackday = @project.hackday
     end
 end

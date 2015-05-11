@@ -1,3 +1,5 @@
+<%= render 'shared/error_messages', :object => @hackday %>
+
 <h1><%= @hackday.title %></h1>
 <small>Held: <%= time_ago_in_words(@hackday.held_at) %> ago</small>
 <%= link_to "See all hackdays", hackdays_url %>

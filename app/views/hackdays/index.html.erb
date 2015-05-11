@@ -1,8 +1,8 @@
 <% provide(:title, "Hackday") %>
 
-<% if @current_hackdays.any? %>
+<% if @current_hackday %>
 	<h1>Current hackday</h1>
-	<%= render 'list', :hackdays => @current_hackdays %>
+	<%= render 'list', :hackdays => [@current_hackday] %>
 <% end %>
 
 <h1>Create a new Hackday!</h1>
